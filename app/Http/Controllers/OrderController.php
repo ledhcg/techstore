@@ -19,12 +19,13 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
 class OrderController extends Controller
 {
     function addOrderToReview(Request $request){
-        $validator = \Validator::make($request->all(), [
+        $validator = Validator::make($request->all(), [
             'client_name'  => 'required|string',
             'client_email' => 'required|email',
             'client_phone' => 'required|phone:RU',
@@ -35,7 +36,7 @@ class OrderController extends Controller
         if(!$validator->passes()){
             return response()->json(['code'=> 0, 'error'=> $validator->errors()->toArray()]);
         } else {
-            $order_note;
+            $order_note='';
             if($request->input('order_note') == null){
                 $order_note = __('main.Note empty');
             } else {
@@ -70,7 +71,7 @@ class OrderController extends Controller
 
 
     public function createOrder(Request $request){
-        $order_note;
+        $order_note='';
         if($request->input('order_note') == null){
             $order_note = 'Nothing';
         } else {
