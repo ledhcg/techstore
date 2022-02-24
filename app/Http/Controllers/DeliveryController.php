@@ -135,7 +135,7 @@ class DeliveryController extends Controller
         $ch = curl_init('https://b2b.taxi.yandex.net/b2b/cargo/integration/v2/claims/create?request_id=' . $gen_uuid);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Accept-Language: ru', 'Authorization: Bearer '.config('app.YANDEX_DELIVERY_TOKEN').''));
         curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($req, JSON_UNESCAPED_UNICODE));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($res, JSON_UNESCAPED_UNICODE));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_HEADER, false);

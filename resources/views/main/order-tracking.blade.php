@@ -208,7 +208,12 @@
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">{{__('main.Message')}}</button>
                             </h2>
                             <div class="accordion-collapse collapse" id="collapseOne" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                                <div class="accordion-body">{{__('main.'.$order->order_note)}}</div>
+                                @if($order->order_note == 'Nothing')
+                                    <div class="accordion-body">{{__('main.'.$order->order_note)}}</div>
+                                @else
+                                    <div class="accordion-body">{{$order->order_note}}</div>
+                                @endif
+
                             </div>
                         </div>
                     </div>
