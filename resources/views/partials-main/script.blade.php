@@ -25,7 +25,7 @@
 
     @if (Route::has('user.login'))
         @auth
-    var channel = pusher.subscribe('htphodatviet_change_order_status');
+    var channel = pusher.subscribe('htphodatviet');
     channel.bind('App\\Events\\UpdateChange', function(data) {
         if(data.user_id == {{Auth::user()->id}}){
             Toastify({

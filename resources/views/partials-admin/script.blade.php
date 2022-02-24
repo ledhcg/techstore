@@ -31,7 +31,7 @@
             encrypted: true
         });
 
-        var channel = pusher.subscribe('htphodatviet_new_order');
+        var channel = pusher.subscribe('htphodatviet');
         channel.bind('App\\Events\\newOrder', function(data) {
             reloadListNotifications();
             reloadListNotificationsDashboard();
