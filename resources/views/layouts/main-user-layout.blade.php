@@ -48,15 +48,16 @@
                                 <h3 class="fs-sm mb-0 text-muted">{{__('main.Dashboard')}}</h3>
                             </div>
                             <ul class="list-unstyled mb-0">
-                                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3 @if($page=='ORDERS') active @endif" href="{{route('user.orders')}}"><i class="ci-bag opacity-60 me-2"></i>{{__('main.Orders')}}</a></li>
-                                <li class="mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3 @if($page=='WISHLIST') active @endif" href="{{route('user.wishlist')}}"><i class="ci-star opacity-60 me-2"></i>{{__('main.Wishlist')}}</a></li>
+                                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3 @if($page=='ORDERS') active @endif" href="{{route('user.orders')}}"><i class="ci-bag opacity-60 me-2 px-2"></i>{{__('main.Orders')}}</a></li>
+                                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3 @if($page=='WISHLIST') active @endif" href="{{route('user.wishlist')}}"><i class="ci-star opacity-60 me-2 px-2"></i>{{__('main.Wishlist')}}</a></li>
+                                <li class="mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3 @if($page=='NOTIFICATIONS') active @endif" href="{{route('user.notifications')}}"><i class="ci-loudspeaker opacity-60 me-2 px-2"></i>{{__('main.Notifications')}}</a></li>
                             </ul>
                             <div class="bg-secondary px-4 py-3">
                                 <h3 class="fs-sm mb-0 text-muted">{{__('main.Account-settings')}}</h3>
                             </div>
                             <ul class="list-unstyled mb-0">
-                                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3 @if($page=='PROFILEINFO') active @endif " href="{{route('user.profileInfo')}}"><i class="ci-user opacity-60 me-2"></i>{{__('main.Profile-info')}}</a></li>
-                                <li class="mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3 pointer" onclick="event.preventDefault();document.getElementById('logout-form').submit();"><i class="ci-sign-out opacity-60 me-2"></i>{{__('main.Sign-out')}}</a>
+                                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3 @if($page=='PROFILEINFO') active @endif " href="{{route('user.profileInfo')}}"><i class="ci-user opacity-60 me-2 px-2"></i>{{__('main.Profile-info')}}</a></li>
+                                <li class="mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3 pointer" onclick="event.preventDefault();document.getElementById('logout-form').submit();"><i class="ci-sign-out opacity-60 me-2 px-2"></i>{{__('main.Sign-out')}}</a>
                                     <form action="{{route('user.logout')}}" method="post" class="d-none" id="logout-form">@csrf</form></li>
                             </ul>
                         </div>

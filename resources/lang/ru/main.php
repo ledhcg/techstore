@@ -92,7 +92,7 @@ return [
 
 
     'Add to cart' => 'Добавить в корзину',
-    'Price' => 'Цена: ',
+    'Price' => 'Цена ',
     'Add' => 'Добавить',
     'All' => 'Все',
     'Store'=> 'Магазин',
@@ -136,7 +136,7 @@ return [
     'Nothing' => '(Пустой)',
     'More products' => 'Магазин',
 
-    'Customer reviews' => 'Đánh giá của khách hàng',
+    'Customer reviews' => 'Рейтинги клиентов',
 
     'How it works' => 'Как мы работаем?',
 
@@ -163,4 +163,35 @@ return [
     'Date Purchased' => 'Время',
     'Status' => 'Статус',
 
+    'Product' => 'Товар',
+    'Created at' => 'Инициализация',
+    'View Order Details'=> 'Просмотр деталей заказа',
+
+    'First step' => 'Шаг 1',
+    'Second step' => 'Шаг 2',
+    'Third step' => 'Шаг 3',
+    'Fourth step' => 'Шаг 4',
+    'CREATED' => 'ИНИЦИАЛИЗАЦИЯ',
+    'RECEIVED' => 'ПОЛУЧИТЬ ЗАКАЗ',
+    'DELIVERING' => 'ДОСТАВКА',
+    'DELIVERED' => 'ЗАВЕРШЕННЫЙ',
+    'Order tracking' => 'Отслеживание заказа',
+    'Last updated' => 'Последнее обновление',
+    'Note empty' => 'Nothing', //Dont change
+    'Search your order' => 'Поиск вашего заказа',
+    'Your order tracking' => 'Код заказа',
+    'TRACKING' => 'ПРОВЕРЯТЬ',
+    'View all notifications' => 'Просмотреть все уведомления',
+
+    'Order status has been changed' => 'Статус заказа был изменен.',
+    'Notifications' => 'Уведомления',
+    'List of notifications' => 'Список уведомлений',
+    'Mark all as read' => 'Отметьте все прочитанное',
+
+    '404 error' => 'Ошибка 404',
+    'We cant seem to find the page you are looking for' => 'Запрашиваемая вами страница не найдена.',
+
+    'Thank you for your order' =>  'Благодарим вас за вашу покупку',
+    'Your order has been placed and will be processed as soon as possible' => 'Ваш заказ был размещен и будет обработан в кратчайшие сроки.',
+    'Your order number' => 'Код ваших заказов',
 ];

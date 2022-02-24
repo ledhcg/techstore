@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\StatusEnum;
 use App\Models\Category;
 use App\Models\Order;
+use App\Models\OrderDetail;
 use App\Models\PaymentMethod;
 use App\Models\Product;
 use App\Models\ShippingFee;
@@ -44,15 +46,13 @@ class HomeController extends Controller
     public function checkoutComplete($orderTracking)
     {
         $order = Order::firstWhere('order_tracking', $orderTracking);
-        $checkExistOrder;
         if($order){
-            $checkExistOrder = true;
             $cart = new CartController();
             $cart->destroyCart();
             $checkout = new OrderController();
             $checkout->destroyCheckout();
         }else {
-            $checkExistOrder = false;
+            abort(404);
         }
         $dataProducts = Product::all();
         $dataCategories = Category::all();
@@ -63,7 +63,6 @@ class HomeController extends Controller
             'urlPhoto' => $urlPhoto,
             'page' => 'CHECKOUTCOMPLETE',
             'orderTracking' => $orderTracking,
-            'checkExistOrder' => $checkExistOrder,
         ]);
     }
 
@@ -73,7 +72,7 @@ class HomeController extends Controller
     }
 
      public function home(){
-        $dataProducts = Product::all();
+        $dataProducts = Product::where('product_status', StatusEnum::ACTIVE)->get();
         $dataCategories = Category::all();
         $urlPhoto = asset("data/images/upload/products/");
         return view('main.index', [
@@ -84,9 +83,33 @@ class HomeController extends Controller
         ]);
     }
 
+    public function orderTracking($order_tracking){
+        if(Auth::check()){
+            $order = Order::where('order_tracking', $order_tracking)->first();
+            $dataProducts = Product::all();
+            $dataCategories = Category::all();
+            $urlPhoto = asset("data/images/upload/products/");
+            if ($order == null){
+                return abort(404);
+            }
+            $orderDetails = OrderDetail::where('order_id', $order_tracking)->get();
+
+            return view('main.order-tracking', [
+                'dataProducts' => $dataProducts,
+                'dataCategories'=>$dataCategories,
+                'urlPhoto' => $urlPhoto,
+                'order' => $order,
+                'orderDetails' => $orderDetails,
+                'page' => 'ORDER_TRACKING'
+            ]);
+        } else {
+            return abort(404);
+        }
+
+    }
+
     public function store(){
-        //$product = Product::all()->where('category_id', 4);
-        $dataProducts = Product::all();
+        $dataProducts = Product::where('product_status', StatusEnum::ACTIVE)->get();
         $dataCategories = Category::all();
         $urlPhoto = asset("data/images/upload/products/");
         return view('main.store', [
@@ -98,7 +121,6 @@ class HomeController extends Controller
     }
 
     public function contacts(){
-        //$product = Product::all()->where('category_id', 4);
         $dataProducts = Product::all();
         $dataCategories = Category::all();
         $urlPhoto = asset("data/images/upload/products/");
@@ -106,7 +128,7 @@ class HomeController extends Controller
             'dataProducts' => $dataProducts,
             'dataCategories'=>$dataCategories,
             'urlPhoto' => $urlPhoto,
-            'page' => 'STORE'
+            'page' => 'CONTACT'
         ]);
     }
 
@@ -177,7 +199,6 @@ class HomeController extends Controller
     }
 
     public function cartDetails(){
-        //$product = Product::all()->where('category_id', 4);
         $dataProducts = Product::all();
         $dataCategories = Category::all();
         $dataShippingFee = ShippingFee::find(1);

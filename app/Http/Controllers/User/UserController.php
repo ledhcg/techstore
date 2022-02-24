@@ -79,6 +79,16 @@ class UserController extends Controller
         ]);
     }
 
+    public function notifications(){
+        $notifications = Auth::user()->notifications;
+        return view('main.user-notifications', [
+            'page' => 'NOTIFICATIONS',
+            'name_page' => __('main.Notifications'),
+            'extra_text' => __('main.List of notifications'),
+            'notifications' => $notifications,
+        ]);
+    }
+
     public function create(Request $request){
         $this->validate($request,[
             'name'=>'required|string',

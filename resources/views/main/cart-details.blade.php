@@ -269,8 +269,10 @@
                 var SHIPPING_CHARGES = {{$dataShippingFee->SHIPPING_CHARGES}},
                     // Минимальная стоимость.
                     MINIMUM_COST = {{$dataShippingFee->MINIMUM_COST}},
+                    MIN_TOTAL_TO_GET_FREE = {{$dataShippingFee->MIN_TOTAL_TO_GET_FREE}},
+                    MAX_DISTANCE_TO_GET_FREE = {{$dataShippingFee->MAX_DISTANCE_TO_GET_FREE}},
 
-                    myMap = new ymaps.Map('map-yandex', {
+                myMap = new ymaps.Map('map-yandex', {
                         center: [60.906882, 30.067233],
                         zoom: 9,
                         controls: []
@@ -301,7 +303,7 @@
                     types: {auto: true}
                 });
 
-                var address1 = 'Россия, Москва, 11-я Парковая улица, 35';
+                var address1 = '{{config('app.address')}}';
                 var address2 = e.get('item').value;
 
                 // Если вы хотите задать неизменяемую точку "откуда", раскомментируйте код ниже.
@@ -330,7 +332,7 @@
                             // Получим протяженность маршрута.
                             var length = route.getActiveRoute().properties.get("distance"),
                                 // Вычислим стоимость доставки.
-                                price = calculate(Math.round(length.value / 1000));
+                                price = calculate(Math.round(length.value / 1000), $('.input-subtotal').val());
 
 
 
@@ -356,8 +358,12 @@
 
                 });
                 // Функция, вычисляющая стоимость доставки.
-                function calculate(routeLength) {
-                    return Math.max(routeLength * SHIPPING_CHARGES, MINIMUM_COST);
+                function calculate(routeLength, total) {
+                    if(total > MIN_TOTAL_TO_GET_FREE || routeLength < MAX_DISTANCE_TO_GET_FREE){
+                        return 0;
+                    } else {
+                        return Math.max(routeLength * SHIPPING_CHARGES, MINIMUM_COST);
+                    }
                 }
             })
 
@@ -372,7 +378,8 @@
                 var SHIPPING_CHARGES = {{$dataShippingFee->SHIPPING_CHARGES}},
                     // Минимальная стоимость.
                     MINIMUM_COST = {{$dataShippingFee->MINIMUM_COST}},
-
+                    MIN_TOTAL_TO_GET_FREE = {{$dataShippingFee->MIN_TOTAL_TO_GET_FREE}},
+                    MAX_DISTANCE_TO_GET_FREE = {{$dataShippingFee->MAX_DISTANCE_TO_GET_FREE}},
                     myMap = new ymaps.Map('map-yandex', {
                         center: [60.906882, 30.067233],
                         zoom: 9,
@@ -404,7 +411,7 @@
                     types: {auto: true}
                 });
 
-                var address1 = 'Россия, Москва, 11-я Парковая улица, 35';
+                var address1 = '{{config('app.address')}}';
                 var address2 = $('#choose-address').val();
 
                 // Если вы хотите задать неизменяемую точку "откуда", раскомментируйте код ниже.
@@ -433,7 +440,8 @@
                             // Получим протяженность маршрута.
                             var length = route.getActiveRoute().properties.get("distance"),
                                 // Вычислим стоимость доставки.
-                                price = calculate(Math.round(length.value / 1000));
+                                // price = calculate(Math.round(length.value / 1000));
+                                price = calculate(Math.round(length.value / 1000), $('.input-subtotal').val());
 
 
 
@@ -459,8 +467,12 @@
 
                 });
                 // Функция, вычисляющая стоимость доставки.
-                function calculate(routeLength) {
-                    return Math.max(routeLength * SHIPPING_CHARGES, MINIMUM_COST);
+                function calculate(routeLength, total) {
+                    if(total > MIN_TOTAL_TO_GET_FREE || routeLength < MAX_DISTANCE_TO_GET_FREE){
+                        return 0;
+                    } else {
+                        return Math.max(routeLength * SHIPPING_CHARGES, MINIMUM_COST);
+                    }
                 }
             };
 

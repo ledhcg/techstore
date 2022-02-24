@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Enums\StatusEnum;
+use Illuminate\Support\Facades\Auth;
 use Image;
 use Yajra\DataTables\Facades\DataTables;
 use App\Models\Category;
@@ -17,12 +18,14 @@ class CategoryController extends Controller
 
     public function addCategory(){
         $dataCategories = Category::all();
-        return view('admin.add-category', ['dataCategories' => $dataCategories]);
+        $notifications = Auth::guard('admin')->user()->unreadNotifications;
+        return view('admin.add-category', ['dataCategories' => $dataCategories], compact('notifications'));
     }
 
     public function allCategories(){
         $dataCategories = Category::all();
-        return view('admin.all-categories', ['dataCategories' => $dataCategories]);
+        $notifications = Auth::guard('admin')->user()->unreadNotifications;
+        return view('admin.all-categories', ['dataCategories' => $dataCategories],compact('notifications'));
     }
 
     public function insert(Request $request){

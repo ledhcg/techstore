@@ -23,5 +23,9 @@ class Product extends Model
       'category_id',
       'product_status'
     ];
+    public function orderDetails()
+    {
+        return $this->hasMany(OrderDetail::class);
+    }
 
 }

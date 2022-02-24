@@ -20,9 +20,19 @@
             @if($result)
                 @foreach($dataOrders as $order)
                 <tr>
-                    <td class="py-3"><a class="nav-link-style fw-medium fs-sm" href="#order-details" data-bs-toggle="modal">{{$order->order_tracking}}</a></td>
+                    <td class="py-3"><a class="nav-link-style fw-medium fs-sm" href="{{route('main.orderTracking', $order->order_tracking)}}" target="_blank">{{$order->order_tracking}}</a></td>
                     <td class="py-3">{{date('g:i A, d M Y', strtotime($order->created_at))}}</td>
-                    <td class="py-3"><span class="badge bg-info m-0">{{$order->order_status}}</span></td>
+                    <td class="py-3"><span class="badge
+                            @if($order->order_status == 'CREATED')
+                            bg-warning
+                            @elseif($order->order_status == 'RECEIVED')
+                            bg-info
+                            @elseif($order->order_status == 'DELIVERING')
+                            bg-primary
+                            @elseif($order->order_status == 'DELIVERED')
+                            bg-success
+                            @endif
+                    m-0">{{$order->order_status}}</span></td>
                     <td class="py-3">{{number_format($order->order_total, 1, ',', ' ')}} ₽</td>
                 </tr>
                 @endforeach

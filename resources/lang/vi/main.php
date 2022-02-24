@@ -101,7 +101,7 @@ return [
 
     'Invalid-quantity' => 'Số lượng không hợp lệ',
     'Add to cart' => 'Thêm vào giỏ hàng',
-    'Price' => 'Giá: ',
+    'Price' => 'Giá ',
     'Add' => 'Thêm',
     'All' => 'Tất cả',
     'Store'=> 'Cửa hàng',
@@ -175,5 +175,39 @@ return [
     'Total' => 'Tổng',
     'Date Purchased' => 'Thời gian',
     'Status' => 'Trạng thái',
+
+    'Product' => 'Sản phẩm',
+    'Created at' => 'Khởi tạo',
+    'View Order Details'=> 'Xem chi tiết đơn hàng',
+
+    'First step' => 'Bước 1',
+    'Second step' => 'Bước 2',
+    'Third step' => 'Bước 3',
+    'Fourth step' => 'Bước 4',
+    'CREATED' => 'KHỞI TẠO',
+    'RECEIVED' => 'NHẬN ĐƠN',
+    'DELIVERING' => 'VẬN CHUYỂN',
+    'DELIVERED' => 'HOÀN THÀNH',
+    'Order tracking' => 'Theo dõi đơn hàng',
+    'Last updated' => 'Cập nhật gần nhất',
+    'Note empty' => 'Nothing', //Dont change
+    'Search your order' => 'Tìm kiếm đơn hàng của bạn',
+    'Your order tracking' => 'Mã đơn hàng',
+    'TRACKING' => 'KIỂM TRA',
+    'View all notifications' => 'Xem tất cả thông báo',
+
+    'Order status has been changed' => 'Trạng thái đơn hàng đã được thay đổi.',
+    'Notifications' => 'Thông báo',
+    'List of notifications' => 'Danh sách thông báo',
+    'Mark all as read' => 'Đánh dấu tất cả đã đọc',
+
+//    '404 error' => 'Ошибка 404',
+//    'We cant seem to find the page you are looking for' => 'Запрашиваемая вами страница не найдена.'
+
+    '404 error' => 'Lỗi 404',
+    'We cant seem to find the page you are looking for' => 'Chúng tôi không thể tìm thấy trang bạn yêu cầu.',
+    'Thank you for your order' =>  'Cảm ơn bạn đã mua hàng',
+    'Your order has been placed and will be processed as soon as possible' => 'Đơn hàng của bạn đã được đặt và sẽ được xử lý trong thời gian sớm nhất.',
+    'Your order number' => 'Số đơn đặt hàng của bạn',
 
 ];

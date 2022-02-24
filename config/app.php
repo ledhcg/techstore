@@ -19,6 +19,9 @@ return [
     'phone_number' => env('PHONE_NUMBER', '+7 (900) 555 67 89'),
     'address' => env('ADDRESS', 'null'),
 
+    'YANDEX_MAP_JS_API' => env('YANDEX_MAP_JS_API', ''),
+    'YANDEX_DELIVERY_TOKEN' => env('YANDEX_DELIVERY_TOKEN', ''),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment
@@ -243,6 +246,7 @@ return [
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         'Cart' => Gloudemans\Shoppingcart\Facades\Cart::class,
         'Image' => 'Intervention\Image\Facades\Image',
+        'Pusher' => Pusher\Pusher::class,
     ],
 
 ];

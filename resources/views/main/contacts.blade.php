@@ -25,17 +25,7 @@
     <!-- Outlet stores-->
     <section class="container pt-grid-gutter">
         <div class="card">
-            <div class="row g-0 justify-content-sm-center">
-                <div class="col-sm-auto col-md-4 p-3">
-                    <img src="{{asset('data/images/source/htphodatviet.jpg')}}" class="rounded" alt="Card image">
-                </div>
-                <div class=" col-sm-auto col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title text-center">{{__('main.'.config('app.name'))}}</h5>
-                        <p class="card-text fs-sm text-muted">(Them thong tin)</p>
-                    </div>
-                </div>
-            </div>
+            <img src="{{asset('data/images/source/htphodatviet.jpg')}}" class="rounded" alt="Card image">
         </div>
     </section>
 

@@ -2,7 +2,9 @@
 
 namespace App\Enums;
 
-class OrderStatusEnum
+use YooKassa\Common\AbstractEnum;
+
+class OrderStatusEnum extends AbstractEnum
 {
     public const CREATED = 'CREATED';
     public const RECEIVED = 'RECEIVED';

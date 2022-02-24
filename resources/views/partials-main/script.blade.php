@@ -15,8 +15,82 @@
 
 <script type="text/javascript" src="https://cdn.rawgit.com/mgalante/jquery.redirect/master/jquery.redirect.js"></script>
 
+<script src="https://js.pusher.com/7.0/pusher-with-encryption.min.js"></script>
+<script>
 
-<script type="text/javascript">
+    var pusher = new Pusher('{{env("MIX_PUSHER_APP_KEY")}}', {
+        cluster: '{{env("PUSHER_APP_CLUSTER")}}',
+        encrypted: true
+    });
+
+    @if (Route::has('user.login'))
+        @auth
+    var channel = pusher.subscribe('htphodatviet_change_order_status');
+    channel.bind('App\\Events\\UpdateChange', function(data) {
+        if(data.user_id == {{Auth::user()->id}}){
+            Toastify({
+                text: "[" +data.order_tracking + "] - {{__('main.Order status has been changed')}}",
+                duration: 7000,
+                close: true,
+                gravity: "bottom",
+                position: "left",
+                backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+                stopOnFocus: true,
+            }).showToast();
+            reloadNotificationNavbar();
+            if(typeof reloadNotification === "function"){
+                reloadNotification();
+            }
+        }
+    });
+
+    reloadNotificationNavbar();
+    function reloadNotificationNavbar(){
+        var url = '{{ route("main.getUserUnreadNotifications") }}';
+        $.ajax({
+            type:'GET',
+            url:url,
+            success:function(data){
+                var data_convert = jQuery.parseJSON(JSON.stringify(data));
+
+                $('.view-notification-count').html(data_convert.count);
+
+                //console.log(data.content);
+                if(data_convert.count == 0){
+                    $('#dropdown-notification').html(
+                        `<div class="text-center pt-3">
+                             <h2 class="h6">{{__('main.Empty list')}}</h2>
+                         </div>`
+                    )
+                } else {
+                    var html_dropdown_list_notifications = `<div style="height: 15rem;" data-simplebar data-simplebar-auto-hide="false" id="dropdown-list-notification">`;
+
+                    data_convert.notifications.forEach(noti => {
+                        html_dropdown_list_notifications +=  `
+                            <div class="d-flex p-3 px-3 pt-3 pb-3 border-bottom">
+                               <i class="ci-loudspeaker fs-lg mt-2 mb-0 text-primary"></i>
+                                <div class="ps-3">
+                                  <span class="fs-ms text-muted">`+ new Date(noti.created_at).toLocaleString() +`</span>
+                                  <a class="d-block text-heading fs-sm pointer" data-id="`+ noti.id +`" data-order_tracking="`+ noti.data.order_tracking +`" onclick="goToOrderTracking(this)">[<strong>`+ noti.data.order_tracking +`</strong>] - {{__('main.Order status has been changed')}}</a>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    html_dropdown_list_notifications +=  `
+                        </div>
+                            <a class="btn btn-primary btn-sm d-block w-100 mt-3" href="{{route('user.notifications')}}">
+                                <i class="ci-arrow-right-circle me-2 fs-base align-middle"></i>{{__('main.View all notifications')}}
+                    </a>
+`;
+
+                    $('#dropdown-notification').html(html_dropdown_list_notifications);
+                }
+            }
+        });
+    }
+        @endauth
+    @endif
+
 
     //Formatter
 
@@ -74,6 +148,7 @@
         url = url.replace(':id', id );
         $.get(url, function (product) {
             $("#modal_product_detail_image").attr("src",product.product_image_hd);
+            console.log(product.product_image_hd);
             $('#modal_product_detail_name').html(product.details.product_name_{{config('app.locale')}});
             if(product.details.product_price_fix > 0){
                 $('#modal_product_sale').html(`<span class="badge bg-primary">{{__('main.Sale')}}</span>`);
@@ -210,8 +285,8 @@
         });
     });
 
-
     reloadCartNavbar();
+
 
 
     //Reload cart
@@ -254,7 +329,7 @@
                     html_dropdown_list_products +=  `
                         </div>
                                         <div class="d-flex flex-wrap justify-content-between align-items-center py-3">
-                                            <div class="fs-sm me-2 py-2"><span class="text-muted">{{__('main.Subtotal')}}:</span><span class="text-accent fs-base ms-1 view-subtotal">` + formatter.format(parseFloat(data_convert.subtotal)) +`<!--<small>00</small>--></span></div><button class="btn btn-outline-secondary btn-sm" onclick="destroyCart()"><i class="ci-trash me-2 fs-base align-middle"></i>{{__('main.Destroy-cart')}}</button>
+                                            <div class="fs-sm me-2 py-2"><span class="text-muted">{{__('main.Subtotal')}}:</span><span class="text-accent fs-base ms-1 view-subtotal">` + formatter.format(Number(data_convert.subtotal.replace(",", ".").replace(/[^0-9.-]+/g,"")))  +`<!--<small>00</small>--></span></div><button class="btn btn-outline-secondary btn-sm" onclick="destroyCart()"><i class="ci-trash me-2 fs-base align-middle"></i>{{__('main.Destroy-cart')}}</button>
                                         </div>
                                         <a class="btn btn-primary btn-sm d-block w-100" href="{{route('main.cartDetails')}}">
                                             <i class="ci-basket me-2 fs-base align-middle"></i>{{__('main.Expand-cart')}}</a>
@@ -615,7 +690,7 @@
                     }).showToast();
                 } else {
                     Toastify({
-                        text: "{{__('nofitications.SUCCESS.Update password')}}",
+                        text: "{{__('notifications.SUCCESS.Update password')}}",
                         duration: 3000,
                         close: true,
                         gravity: "bottom",
@@ -734,6 +809,69 @@
             }
         });
     });
+
+    $('#tracking-btn').on('click', function(){
+        var url = '{{ route("order.checkOrderTrackingExist", ":order_tracking") }}';
+        url = url.replace(':order_tracking', $('#order-tracking-input').val());
+        console.log(url);
+        $.get(url, function (data) {
+            if(data.isExist == 'YES'){
+                var url = '{{route('main.orderTracking', ":id")}}';
+                url = url.replace(':id', $('#order-tracking-input').val());
+                let a= document.createElement('a');
+                a.href= url;
+                a.click();
+
+            } else {
+                $('#alert-error-order-tracking').html(`
+                    <div class="alert alert-primary d-flex" role="alert">
+                        <div class="alert-icon">
+                            <i class="ci-bell"></i>
+                        </div>
+                        <div class="text-center">{{__('notifications.ERROR.Invalid order tracking')}}</div>
+                    </div>
+                `);
+            }
+        })
+    });
+    $('.clear-modal-order-tracking').on('click', function(){
+       $('#alert-error-order-tracking').html(``);
+    });
+
+
+    function goToOrderTracking(order){
+        var order_tracking = order.dataset.order_tracking;
+        var notification_id = order.dataset.id;
+        markAsRead(notification_id);
+        var url = '{{route('main.orderTracking', ":id")}}';
+        url = url.replace(':id', order_tracking);
+        let a= document.createElement('a');
+        a.href= url;
+        a.target = '_blank';
+        a.click();
+    }
+
+    function markAsRead(id){
+        var url = '{{route('notification.markAsReadNotificationUser')}}';
+        $.ajax({
+            type:'POST',
+            url:url,
+            data: {
+                id: id,
+                _token: '{{csrf_token()}}'
+            },
+            success:function(data){
+                if(data.success == 1){
+                    reloadNotificationNavbar();
+                    if(typeof reloadNotification === "function"){
+                        reloadNotification();
+                    }
+                }
+            }
+        });
+    }
+
+
 
 </script>
 

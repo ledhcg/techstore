@@ -16,6 +16,7 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.3",
         "propaganistas/laravel-phone": "^4.3",
+        "pusher/pusher-php-server": "^7.0",
         "yajra/laravel-datatables-oracle": "~9.0",
         "yoomoney/yookassa-sdk-php": "^2.1"
     },

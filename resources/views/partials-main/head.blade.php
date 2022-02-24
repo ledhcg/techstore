@@ -41,6 +41,26 @@
             background-color: #5e000a !important;
         }
 
+        .parent-animated-white-space{
+            overflow-x: hidden;
+        }
+        .animated-white-space {
+            white-space: nowrap;
+            animation: 20s linear 2s animation infinite;
+
+        }
+
+        @keyframes animation {
+            0% {
+                transform: translateX(5%)
+            }
+            50% {
+                transform: translateX(-95%)
+            }
+            100% {
+                transform: translateX(5%)
+            }
+        }
 
     </style>
     <!--Google font -->

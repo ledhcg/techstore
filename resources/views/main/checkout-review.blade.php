@@ -97,7 +97,7 @@
                                         @if($order_note == null)
                                             {{__('main.NULL')}}
                                         @else
-                                            <strong>{{$order_note}}</strong>
+                                            <strong>{{__('main.'.$order_note)}}</strong>
                                             <textarea type="hidden" id="order_note" name="order_note" style="display:none;">{{$order_note}}</textarea>
                                         @endif
                                     </strong>

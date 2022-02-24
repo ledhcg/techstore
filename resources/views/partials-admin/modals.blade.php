@@ -208,3 +208,122 @@
         </div>
     </div>
 </div>
+
+<!-- view order modal -->
+
+<div class="modal fade modal-view-order" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Xem đơn hàng - <strong id="od_id_tracking"></strong></h3>
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                </button>
+            </div>
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="card ">
+                        <div class="m-4">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th class="text-center">
+                                            Thông tin
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td >Tên khách hàng</td>
+                                        <th colspan="5" id="od_client_name"></th>
+                                    </tr>
+                                    <tr>
+                                        <td >Địa chỉ</td>
+                                        <th colspan="5" id="od_client_address"></th>
+                                    </tr>
+                                    <tr>
+                                        <td >Email</td>
+                                        <th colspan="5" id="od_client_email"></th>
+                                    </tr>
+                                    <tr>
+                                        <td >Số điện thoại</td>
+                                        <th colspan="5" id="od_client_phone"></th>
+                                    </tr>
+                                    <tr>
+                                        <td >Tổng</td>
+                                        <th colspan="5" id="od_amount"></th>
+                                    </tr>
+                                    <tr>
+                                        <td >Phí vận chuyển</td>
+                                        <th colspan="5" id="od_ship"></th>
+                                    </tr>
+                                    <tr>
+                                        <td >Trạng thái</td>
+                                        <th colspan="5" id="od_status"></th>
+                                    </tr>
+                                    <tr>
+                                        <td >Thời gian đặt hàng</td>
+                                        <th colspan="5" id="created_at"></th>
+                                    </tr>
+                                    <tr>
+                                        <td >Ghi chú</td>
+                                        <th colspan="5" id="od_note"></th>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+{{--                            <table class="display min-w850">--}}
+{{--                                <thead>--}}
+{{--                                <tr>--}}
+{{--                                    <th>Tên khách hàng</th>--}}
+{{--                                    <th>Email</th>--}}
+{{--                                    <th>Số điện thoại</th>--}}
+{{--                                    <th>Tổng</th>--}}
+{{--                                    <th>Phí vận chuyển</th>--}}
+{{--                                    <th>Mã đơn hàng</th>--}}
+{{--                                    <th>Trạng thái</th>--}}
+{{--                                </tr>--}}
+{{--                                </thead>--}}
+{{--                                <tbody>--}}
+{{--                                <tr>--}}
+{{--                                    <td id="od_client_name"></td>--}}
+{{--                                    <td id="od_client_email"></td>--}}
+{{--                                    <td id="od_client_phone"></td>--}}
+{{--                                    <td id="od_amount"></td>--}}
+{{--                                    <td id="od_ship"></td>--}}
+{{--                                    <td id="od_id_tracking"></td>--}}
+{{--                                    <td id="od_status"></td>--}}
+{{--                                </tr>--}}
+{{--                                </tbody>--}}
+{{--                            </table>--}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-12">
+                    <div class="card m-4">
+                        <div class="table-responsive">
+                            <table id="order-details-datatable" class="display min-w850">
+                                <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Sản phẩm</th>
+                                    <th>Giá</th>
+                                    <th>Số lượng</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger light" data-dismiss="modal">Đóng</button>
+            </div>
+            </form>
+
+        </div>
+    </div>
+</div>

@@ -6,6 +6,7 @@ use App\Enums\StatusEnum;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Image;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -18,13 +19,15 @@ class ProductController extends Controller
 
 
     public function addProduct(){
+        $notifications = Auth::guard('admin')->user()->unreadNotifications;
         $dataCategories = Category::where('category_status', StatusEnum::ACTIVE)->get();
-        return view('admin.add-product', ['dataCategories' => $dataCategories]);
+        return view('admin.add-product', ['dataCategories' => $dataCategories], compact('notifications'));
     }
 
     public function allProducts(){
+        $notifications = Auth::guard('admin')->user()->unreadNotifications;
         $dataCategories = Category::all();
-        return view('admin.all-products', ['dataCategories' => $dataCategories]);
+        return view('admin.all-products', ['dataCategories' => $dataCategories], compact('notifications'));
     }
 
     public function insert(Request $request){

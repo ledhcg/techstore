@@ -21,8 +21,10 @@ return [
         'Please try again' => 'Lỗi. Vui lòng kiểm tra lại',
         'Check your email and password' => 'Kiểm tra lại email và mật khẩu',
         'Registration' => 'Đăng ký không thành công',
+        'Invalid order tracking' => 'Mã đơn hàng không hợp lệ.'
     ],
 
     'No results found' => 'Không có kết quả được tìm thấy.',
 
 ];
+

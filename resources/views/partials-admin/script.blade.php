@@ -6,21 +6,122 @@
 	<script src="{{asset('public/admin/vendor/chart.js/Chart.bundle.min.js')}}"></script>
 	<script src="{{asset('public/admin/vendor/bootstrap-datetimepicker/js/moment.js')}}"></script>
 	<script src="{{asset('public/admin/vendor/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js')}}"></script>
-	<!-- Chart piety plugin files -->
-    <script src="{{asset('public/admin/vendor/peity/jquery.peity.min.js')}}"></script>
 
-	<!-- Apex Chart -->
-	<script src="{{asset('public/admin/vendor/apexchart/apexchart.js')}}"></script>
+    <script src="{{asset('public/admin/vendor/toastr/js/toastr.min.js')}}"></script>
+{{--	<!-- Chart piety plugin files -->--}}
+{{--    <script src="{{asset('public/admin/vendor/peity/jquery.peity.min.js')}}"></script>--}}
 
-	<!-- Dashboard 1 -->
-	<script src="{{asset('public/admin/js/dashboard/dashboard-1.js')}}"></script>
+{{--	<!-- Apex Chart -->--}}
+{{--	<script src="{{asset('public/admin/vendor/apexchart/apexchart.js')}}"></script>--}}
+
+{{--	<!-- Dashboard 1 -->--}}
+{{--	<script src="{{asset('public/admin/js/dashboard/dashboard-1.js')}}"></script>--}}
 
     <!-- Datatable -->
     <script src="{{asset('public/admin/vendor/datatables/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('public/admin/js/plugins-init/datatables.init.js')}}"></script>
+    <script src="https://js.pusher.com/7.0/pusher-with-encryption.min.js"></script>
+    <!-- css.gg -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/1.35.0/iconfont/tabler-icons.min.css" integrity="sha512-tpsEzNMLQS7w9imFSjbEOHdZav3/aObSESAL1y5jyJDoICFF2YwEdAHOPdOr1t+h8hTzar0flphxR76pd0V1zQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <script type="text/javascript">
+    <script>
 
+        var pusher = new Pusher('{{env("MIX_PUSHER_APP_KEY")}}', {
+            cluster: '{{env("PUSHER_APP_CLUSTER")}}',
+            encrypted: true
+        });
+
+        var channel = pusher.subscribe('htphodatviet_new_order');
+        channel.bind('App\\Events\\newOrder', function(data) {
+            reloadListNotifications();
+            reloadListNotificationsDashboard();
+            toastr.success("Đơn hàng mới đã được tạo.", data.order_tracking, {
+                timeOut: 5000,
+                closeButton: !0,
+                debug: !1,
+                newestOnTop: !0,
+                progressBar: !0,
+                positionClass: "toast-bottom-left",
+                preventDuplicates: !0,
+                onclick: null,
+                showDuration: "300",
+                hideDuration: "1000",
+                extendedTimeOut: "1000",
+                showEasing: "swing",
+                hideEasing: "linear",
+                showMethod: "fadeIn",
+                hideMethod: "fadeOut",
+                tapToDismiss: !1
+            })
+        });
+
+
+        function markAsRead(notification) {
+            var id = notification.dataset.id;
+            var url = '{{route('notification.markAsReadNotificationAdmin')}}';
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: {
+                    id: id,
+                    _token: '{{csrf_token()}}'
+                },
+                success: function (data) {
+                    if (data.success == 1) {
+                        reloadListNotifications();
+                    }
+                }
+            });
+        }
+
+        function markAllAsRead(){
+            var url = '{{route('notification.markAllAsReadNotificationsAdmin')}}';
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: {
+                    _token: '{{csrf_token()}}'
+                },
+                success: function (data) {
+                    if (data.success == 1) {
+                        reloadListNotifications();
+                        reloadListNotificationsDashboard();
+                    }
+                }
+            });
+        }
+
+        function goToOrderTracking(order){
+            var order_tracking = order.dataset.order_tracking;
+            var notification_id = order.dataset.id;
+            markAsRead(notification_id);
+            var url = '{{route('main.orderTracking', ":id")}}';
+            url = url.replace(':id', order_tracking);
+            let a= document.createElement('a');
+            a.href= url;
+            a.target = '_blank',
+            a.click();
+        }
+
+        function changeOrderStatus(selectObject){
+            var order_id = selectObject.dataset.id;
+            var order_status = selectObject.value;
+            $.ajax({
+                type: "POST",
+                url: "{{ route('order.changeOrderStatus') }}",
+                data: {
+                    order_id:order_id,
+                    order_status: order_status,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function (data) {
+                    alert(data.msg);
+                },
+                error: function (data) {
+                    console.log('Error:', data);
+                }
+            });
+        }
 
         // ===== START Product ===== //
 
@@ -331,6 +432,292 @@
         }
 
         // ===== END Category ===== //
+
+        $(function () {
+            var table = $('#user-datatable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('admin.getUsers') }}",
+                columns: [
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'name', name: 'name'},
+                    {data: 'gender', name: 'gender'},
+                    {data: 'phone', name: 'phone'},
+                    {data: 'address', name: 'address'},
+                    {data: 'email', name: 'email'}
+                ]
+            });
+        });
+
+        $(function () {
+            var table = $('#order-datatable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('admin.getOrders')}}",
+                columns: [
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'client_name', name: 'client_name'},
+                    {data: 'client_email', name: 'client_email'},
+                    {data: 'client_phone', name: 'client_phone'},
+                    {data: 'order_total', name: 'order_total'},
+                    {data: 'order_tracking', name: 'order_tracking'},
+                    {data: 'order_status', name: 'order_status'},
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false
+                    },
+                ]
+            });
+        });
+
+        $(function () {
+            var table = $('#order-created-datatable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('admin.getOrdersCreated')}}",
+                columns: [
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'client_name', name: 'client_name'},
+                    {data: 'client_email', name: 'client_email'},
+                    {data: 'client_phone', name: 'client_phone'},
+                    {data: 'order_total', name: 'order_total'},
+                    {data: 'order_tracking', name: 'order_tracking'},
+                    {data: 'order_status', name: 'order_status'},
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false
+                    },
+                ]
+            });
+        });
+
+        $(function () {
+            var table = $('#order-received-datatable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('admin.getOrdersReceived')}}",
+                columns: [
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'client_name', name: 'client_name'},
+                    {data: 'client_email', name: 'client_email'},
+                    {data: 'client_phone', name: 'client_phone'},
+                    {data: 'order_total', name: 'order_total'},
+                    {data: 'order_tracking', name: 'order_tracking'},
+                    {data: 'order_status', name: 'order_status'},
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false
+                    },
+                ]
+            });
+        });
+
+        $(function () {
+            var table = $('#order-delivering-datatable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('admin.getOrdersDelivering')}}",
+                columns: [
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'client_name', name: 'client_name'},
+                    {data: 'client_email', name: 'client_email'},
+                    {data: 'client_phone', name: 'client_phone'},
+                    {data: 'order_total', name: 'order_total'},
+                    {data: 'order_tracking', name: 'order_tracking'},
+                    {data: 'order_status', name: 'order_status'},
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false
+                    },
+                ]
+            });
+        });
+
+        $(function () {
+            var table = $('#order-delivered-datatable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('admin.getOrdersDelivered')}}",
+                columns: [
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'client_name', name: 'client_name'},
+                    {data: 'client_email', name: 'client_email'},
+                    {data: 'client_phone', name: 'client_phone'},
+                    {data: 'order_total', name: 'order_total'},
+                    {data: 'order_tracking', name: 'order_tracking'},
+                    {data: 'order_status', name: 'order_status'},
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false
+                    },
+                ]
+            });
+        });
+
+
+
+        // ===== START Order ===== //
+
+        //Get order by id
+        $('body').on('click', '.viewNewOrder', function () {
+            $('.modal-body').hide();
+            $('.modal-loading').show();
+            $('.no_content').html(``);
+            var order_tracking = $(this).data("order_tracking");
+            var notification_id = $(this).data("id");
+            $('#NO_order_tracking').html(order_tracking);
+            var url = '{{ route("order.adminGetOrderByID", ":order_tracking") }}';
+            url = url.replace(':order_tracking', order_tracking );
+            $.get(url, function (order) {
+                $("#NO_name").html(order.orderInfo.client_name);
+                $('#NO_phone').html(order.orderInfo.client_phone);
+                $('#NO_address').html(order.orderInfo.client_address);
+                $('#NO_email').html(order.orderInfo.client_email);
+                $('#NO_note').html(order.orderInfo.order_note);
+                var table_order_details = ``;
+                var count = 1;
+                $.each(order.orderDetails, function( key, value ) {
+                    table_order_details +=`
+                        <tr>
+                           <td><strong>`+ count +`</strong></td>
+                           <td>`+ value.product_id+`</td>
+                           <td>`+ value.product_quantity +`</td>
+                        </tr>
+                    `;
+                    count++;
+                });
+                $('.tb-order-details').html(table_order_details);
+                $('.modal-body').show();
+                $('.modal-loading').hide();
+                $('.button-accept-order').attr('onclick', 'sendMarkRequest('+notification_id+')');
+            })
+        });
+
+
+        //Get order details by order_tracking
+        $('body').on('click', '.viewOrder', function () {
+
+            var order_tracking = $(this).data("id");
+
+            var url_get = '{{ route("admin.getOrderByID", ":order_tracking") }}';
+            url_get = url_get.replace(':order_tracking', order_tracking );
+            $.get(url_get, function (order) {
+                $("#od_client_name").html(order.client_name);
+                $("#od_client_address").html(order.client_address);
+                $('#od_client_email').html(order.client_email);
+                $('#od_client_phone').html(order.client_phone);
+                $('#od_amount').html(order.order_total + ' ₽');
+                $('#od_ship').html(order.order_ship + ' ₽');
+                $('#od_id_tracking').html(order.order_tracking);
+                $('#od_status').html(order.order_status);
+                $('#od_note').html(order.order_note);
+                $('#created_at').html(new Date(order.created_at).toLocaleString());
+            })
+
+            var url = '{{route("admin.getOrderDetails", ":order_tracking")}}';
+            url = url.replace(':order_tracking', order_tracking );
+            var table1 = $('#order-details-datatable').DataTable({
+                processing: true,
+                serverSide: true,
+                destroy: true,
+                ajax: url,
+                columns: [
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'product_name', name: 'product_name'},
+                    {data: 'product_price', name: 'product_price'},
+                    {data: 'product_quantity', name: 'product_quantity'}
+                ]
+            });
+        });
+
+        function reloadListNotifications(){
+            var url = '{{ route("notification.getAdminUnreadNotifications") }}';
+            $.ajax({
+                type:'GET',
+                url:url,
+                success:function(data){
+                    var data_convert = jQuery.parseJSON(JSON.stringify(data));
+
+                    $('.view-notification-count').html(data_convert.count);
+
+                    if(data_convert.count == 0){
+                        $('#dropdown-notification').html(
+                            `Không có đơn hàng mới.`
+                        )
+                    } else {
+                        var html_dropdown_list_notifications = ``;
+
+                        data_convert.notifications.forEach(noti => {
+                            html_dropdown_list_notifications +=  `
+                                                <li>
+                                                    <a href="{{route('admin.all-orders-created')}}" onclick="markAsRead(this)" data-id="`+ noti.id +`">
+                                                        <div class="timeline-panel">
+                                                            <div class="media mr-2">
+                                                                <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path d="M22.75 15.8385V13.0463C22.7471 10.8855 21.9385 8.80353 20.4821 7.20735C19.0258 5.61116 17.0264 4.61555 14.875 4.41516V2.625C14.875 2.39294 14.7828 2.17038 14.6187 2.00628C14.4546 1.84219 14.2321 1.75 14 1.75C13.7679 1.75 13.5454 1.84219 13.3813 2.00628C13.2172 2.17038 13.125 2.39294 13.125 2.625V4.41534C10.9736 4.61572 8.97429 5.61131 7.51794 7.20746C6.06159 8.80361 5.25291 10.8855 5.25 13.0463V15.8383C4.26257 16.0412 3.37529 16.5784 2.73774 17.3593C2.10019 18.1401 1.75134 19.1169 1.75 20.125C1.75076 20.821 2.02757 21.4882 2.51969 21.9803C3.01181 22.4724 3.67904 22.7492 4.375 22.75H9.71346C9.91521 23.738 10.452 24.6259 11.2331 25.2636C12.0142 25.9013 12.9916 26.2497 14 26.2497C15.0084 26.2497 15.9858 25.9013 16.7669 25.2636C17.548 24.6259 18.0848 23.738 18.2865 22.75H23.625C24.321 22.7492 24.9882 22.4724 25.4803 21.9803C25.9724 21.4882 26.2492 20.821 26.25 20.125C26.2486 19.117 25.8998 18.1402 25.2622 17.3594C24.6247 16.5786 23.7374 16.0414 22.75 15.8385ZM7 13.0463C7.00232 11.2113 7.73226 9.45223 9.02974 8.15474C10.3272 6.85726 12.0863 6.12732 13.9212 6.125H14.0788C15.9137 6.12732 17.6728 6.85726 18.9703 8.15474C20.2677 9.45223 20.9977 11.2113 21 13.0463V15.75H7V13.0463ZM14 24.5C13.4589 24.4983 12.9316 24.3292 12.4905 24.0159C12.0493 23.7026 11.716 23.2604 11.5363 22.75H16.4637C16.284 23.2604 15.9507 23.7026 15.5095 24.0159C15.0684 24.3292 14.5411 24.4983 14 24.5ZM23.625 21H4.375C4.14298 20.9999 3.9205 20.9076 3.75644 20.7436C3.59237 20.5795 3.50014 20.357 3.5 20.125C3.50076 19.429 3.77757 18.7618 4.26969 18.2697C4.76181 17.7776 5.42904 17.5008 6.125 17.5H21.875C22.571 17.5008 23.2382 17.7776 23.7303 18.2697C24.2224 18.7618 24.4992 19.429 24.5 20.125C24.4999 20.357 24.4076 20.5795 24.2436 20.7436C24.0795 20.9076 23.857 20.9999 23.625 21Z" fill="#007A64"/>
+                                                                </svg>
+                                                            </div>
+                                                            <div class="media-body">
+                                                                <h6 class="mb-1">Đơn hàng `+ noti.data.order_tracking +` đã được tạo.</h6>
+                                                                <small class="d-block">`+ new Date(noti.created_at).toLocaleString() +`</small>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+
+                                                </li>
+                        `;
+                        });
+                        $('#dropdown-notification').html(html_dropdown_list_notifications);
+                    }
+                }
+            });
+        }
+
+        function reloadListNotificationsDashboard(){
+            var url = '{{ route("notification.getAdminUnreadNotifications") }}';
+            $.ajax({
+                type:'GET',
+                url:url,
+                success:function(data){
+                    var data_convert = jQuery.parseJSON(JSON.stringify(data));
+
+                    if(data_convert.count == 0){
+                        $('#list-notification-dashboard').html(
+                            `Không có đơn hàng mới.`
+                        )
+                    } else {
+                        var html_dropdown_list_notifications = `
+                                                <div class="pb-2">
+                                                    <a class="pointer" onclick="markAllAsRead()">
+                                                        Đánh dấu đã đọc tất cả
+                                                    </a>
+                                                </div>`
+                        ;
+
+                        data_convert.notifications.forEach(noti => {
+                            html_dropdown_list_notifications +=  `
+                                                <a href="{{route('admin.all-orders-created')}}" onclick="markAsRead(this)" data-id="`+ noti.id +`">
+                                                    <div class="alert alert-success pointer" role="alert">
+                                                         [`+ noti.data.order_tracking +`] Đơn hàng <strong>`+ noti.data.order_tracking +`</strong> đã được tạo thành công.
+                                                    </div>
+                                                </a>
+                        `;
+                        });
+                        $('#list-notification-dashboard').html(html_dropdown_list_notifications);
+                    }
+                }
+            });
+        }
 
     </script>
 	<script>

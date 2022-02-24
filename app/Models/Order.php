@@ -25,4 +25,9 @@ class Order extends Model
         'order_tracking',
         'order_description',
     ];
+
+    public function paymentMethods()
+    {
+        return $this->belongsTo(PaymentMethod::class, 'order_payment');
+    }
 }

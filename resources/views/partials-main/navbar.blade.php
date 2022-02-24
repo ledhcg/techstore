@@ -6,7 +6,11 @@
             <div class="topbar-text dropdown d-md-none"><a class="topbar-link dropdown-toggle" href="#" data-bs-toggle="dropdown">{{__('main.Useful-links')}}</a>
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="tel:{{config('app.phone_number', '+7 (900) 555 67 89')}}"><i class="ci-support text-muted me-2"></i>{{config('app.phone_number', '+7 (900) 555 67 89')}}</a></li>
-                    <li><a class="dropdown-item" href="order-tracking.html"><i class="ci-location text-muted me-2"></i>{{__('main.Order-tracking')}}</a></li>
+                    @if (Route::has('user.login'))
+                        @auth
+                            <li><a class="dropdown-item pointer clear-modal-order-tracking" data-bs-toggle="modal" data-bs-target="#modal-order-tracking"><i class="ci-location text-muted me-2"></i>{{__('main.Order-tracking')}}</a></li>
+                        @endauth
+                    @endif
                 </ul>
             </div>
             <div class="topbar-text text-nowrap d-none d-md-inline-block"><i class="ci-support"></i><span class="text-muted me-1">{{__('main.Support')}}</span><a class="topbar-link" href="tel:{{config('app.phone_number', '+7 (900) 555 67 89')}}">{{config('app.phone_number', '+7 (900) 555 67 89')}}</a></div>
@@ -17,7 +21,14 @@
                     <div class="topbar-text">{{__('main.Topbar-text3')}}</div>
                 </div>
             </div>
-            <div class="ms-3 text-nowrap"><a class="topbar-link me-4 d-none d-md-inline-block" href="order-tracking.html"><i class="ci-location"></i>{{__('main.Order-tracking')}}</a>
+            <div class="ms-3 text-nowrap">
+
+                @if (Route::has('user.login'))
+                    @auth
+                <a class="topbar-link me-4 d-none d-md-inline-block pointer clear-modal-order-tracking" data-bs-toggle="modal" data-bs-target="#modal-order-tracking"><i class="ci-location"></i>{{__('main.Order-tracking')}}</a>
+                    @endauth
+                @endif
+
                 <div class="topbar-text dropdown disable-autohide">
                     @if(config('app.locale') == 'vi')
                         <a class="topbar-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
@@ -43,7 +54,11 @@
     <!-- Remove "navbar-sticky" class to make navigation bar scrollable with the page.-->
     <div class="navbar-sticky bg-light">
         <div class="navbar navbar-expand-lg navbar-light">
-            <div class="container"><a class="navbar-brand d-none d-sm-block flex-shrink-0" href="{{route('main.home')}}"><img src="{{asset('public/main/img/logo-dark.png')}}" width="142" alt="HT"></a><a class="navbar-brand d-sm-none flex-shrink-0 me-2" href="index-2.html"><img src="{{asset('public/main/img/logo-icon.png')}}" width="74" alt="HT"></a>
+            <div class="container">
+                <a class="navbar-brand d-none d-sm-block flex-shrink-0" href="{{route('main.home')}}">
+                    <img src="{{asset('public/main/img/logo-dark.png')}}" width="142" alt="HT"></a>
+                <a class="navbar-brand d-sm-none flex-shrink-0 me-2" href="{{route('main.home')}}">
+                    <img src="{{asset('public/main/img/logo-icon.png')}}" width="74" alt="HT"></a>
                 <div class="input-group d-none d-lg-flex mx-4">
                         <input class="form-control rounded-end pe-5" id="input_search" type="text" placeholder="{{__('main.Search-for-products')}}">
                         <i class="ci-search position-absolute top-50 end-0 translate-middle-y text-muted fs-base me-3"></i>
@@ -62,7 +77,19 @@
                                     <a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2" href="{{route('user.profileInfo')}}">
                                         <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-user"></i></div>
                                         <div class="navbar-tool-text ms-n3"><small>{{__('main.Hello')}}</small><span class="account-name">{{Auth::user()->name}}</span></div></a>
-                                @else
+                                    <div class="navbar-tool dropdown ms-3">
+                                        <a class="navbar-tool-icon-box bg-secondary dropdown-toggle" href="{{route('user.notifications')}}">
+                                            <span class="navbar-tool-label view-notification-count">{{Auth::user()->unreadNotifications()->count()}}</span>
+                                            <i class="navbar-tool-icon ci-bell"></i>
+                                        </a>
+                                        <!-- Cart dropdown-->
+                                        <div class="dropdown-menu dropdown-menu-end">
+                                            <div class="widget widget-cart px-3 pt-2 pb-3" id="dropdown-notification" style="width: 20rem;">
+                                                <!--Content-->
+                                            </div>
+                                        </div>
+                                    </div>
+                        @else
                                     <a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2" href="{{route('user.login')}}">
                                         <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-user"></i></div>
                                         <div class="navbar-tool-text ms-n3"><small>{{__('main.Sign-in')}}</small>{{__('main.My-Account')}}</div></a>
@@ -102,9 +129,15 @@
                                 <div class="d-flex flex-wrap flex-sm-nowrap">
                                     @foreach($dataCategories as $categoryNav)
                                     <div class="mega-dropdown-column pt-3 pt-sm-4 px-2 px-lg-3">
+                                        @if(isset($page))
                                         <div class="widget widget-links"><a class="d-block overflow-hidden rounded-3 mb-3 @if($page == 'STORE') pointer" onclick="loadTabFromStore({{$categoryNav->id}})" @else " href="{{route('main.store')}}#tab_category_{{$categoryNav->id}}" @endif><img src="{{asset('data/images/upload/categories/'.$categoryNav->category_image)}}" alt="Clothing"></a>
                                             <h6 class="fs-base mb-2">{{$categoryNav["category_name_".config('app.locale')]}}</h6>
                                         </div>
+                                        @else
+                                            <div class="widget widget-links"><a class="d-block overflow-hidden rounded-3 mb-3" href="{{route('main.store')}}#tab_category_{{$categoryNav->id}}"><img src="{{asset('data/images/upload/categories/'.$categoryNav->category_image)}}" alt="Clothing"></a>
+                                                <h6 class="fs-base mb-2">{{$categoryNav["category_name_".config('app.locale')]}}</h6>
+                                            </div>
+                                        @endif
                                     </div>
                                     @endforeach
                                 </div>
@@ -112,12 +145,19 @@
                         </li>
                     </ul>
                     <!-- Primary menu-->
+                    @if(isset($page))
                     <ul class="navbar-nav">
                         <li class="nav-item @if($page == 'HOME') active @endif"><a class="nav-link" href="{{route('main.home')}}">{{__('main.Home')}}</a></li>
                         <li class="nav-item @if($page == 'STORE') active @endif"><a class="nav-link" href="{{route('main.store')}}">{{__('main.Store')}}</a></li>
                         <li class="nav-item @if($page == 'CONTACT') active @endif"><a class="nav-link" href="{{route('main.contacts')}}">{{__('main.Contacts')}}</a></li>
-                        <!--<li class="nav-item @if($page == 'ABOUT') active @endif"><a class="nav-link" href="#">{{__('main.About')}}</a></li>-->
                     </ul>
+                    @else
+                        <ul class="navbar-nav">
+                            <li class="nav-item "><a class="nav-link" href="{{route('main.home')}}">{{__('main.Home')}}</a></li>
+                            <li class="nav-item "><a class="nav-link" href="{{route('main.store')}}">{{__('main.Store')}}</a></li>
+                            <li class="nav-item "><a class="nav-link" href="{{route('main.contacts')}}">{{__('main.Contacts')}}</a></li>
+                        </ul>
+                    @endif
                 </div>
             </div>
         </div>
