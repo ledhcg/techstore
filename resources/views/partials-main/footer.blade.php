@@ -56,7 +56,7 @@
                         </div>
                     </div>
                     <div class="widget widget-links widget-light">
-                        <div class="pb-4 fs-xs text-light opacity-50 text-center text-md-start">© All rights reserved. Made by <a class="text-light" href="https://dinhcuong.me/" target="_blank" rel="noopener">DINHCUONG.ME</a></div>
+                        <div class="pb-4 fs-xs text-light opacity-50 text-center text-md-start">© All rights reserved. Made by <a class="text-light" href="https://ledinhcuong.com/" target="_blank" rel="noopener">LEDINHCUONG.COM</a></div>
                     </div>
                 </div>
                 <div class="col-md-6 text-center text-md-end mb-4">
