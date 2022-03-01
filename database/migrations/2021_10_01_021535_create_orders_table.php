@@ -20,7 +20,7 @@ class CreateOrdersTable extends Migration
             $table->string('client_email');
             $table->string('client_phone');
             $table->string('client_address');
-            $table->enum('order_status', ['CREATED', 'RECEIVED', 'DELIVERING', 'DELIVERED'])->default('CREATED');
+            $table->enum('order_status', ['CREATED', 'RECEIVED', 'DELIVERING', 'DELIVERED', 'DELETE'])->default('CREATED');
             $table->string('order_note');
             $table->float('order_total');
             $table->float('order_discount');

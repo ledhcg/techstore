@@ -7,8 +7,11 @@
 	<script src="{{asset('public/admin/vendor/bootstrap-datetimepicker/js/moment.js')}}"></script>
 	<script src="{{asset('public/admin/vendor/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js')}}"></script>
 
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="{{asset('public/admin/vendor/toastr/js/toastr.min.js')}}"></script>
-{{--	<!-- Chart piety plugin files -->--}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js" integrity="sha512-6+YN/9o9BWrk6wSfGxQGpt3EUK6XeHi6yeHV+TYD2GR0Sj/cggRpXr1BrAQf0as6XslxomMUxXp2vIl+fv0QRA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/push.js/1.0.8/push.min.js" integrity="sha512-eiqtDDb4GUVCSqOSOTz/s/eiU4B31GrdSb17aPAA4Lv/Cjc8o+hnDvuNkgXhSI5yHuDvYkuojMaQmrB5JB31XQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    {{--	<!-- Chart piety plugin files -->--}}
 {{--    <script src="{{asset('public/admin/vendor/peity/jquery.peity.min.js')}}"></script>--}}
 
 {{--	<!-- Apex Chart -->--}}
@@ -52,9 +55,53 @@
                 showMethod: "fadeIn",
                 hideMethod: "fadeOut",
                 tapToDismiss: !1
-            })
+            });
+            Push.create(data.order_tracking, {
+                body: "Đơn hàng mới đã được tạo.",
+                icon: '{{asset('public/admin/images/logo.png')}}',
+                timeout: 10000,
+                onClick: function () {
+                    window.focus();
+                    this.close();
+                }
+            });
+            sound.play();
         });
 
+        $('body').one('keypress click', function() {
+            let buttonStartAudioContext = document.getElementById('start-audio-context');
+            startAudioContext(buttonStartAudioContext);
+        });
+        function startAudioContext(e){
+            e.classList.remove("btn-primary");
+            e.classList.add("btn-success");
+            e.innerHTML = `<i class="fa fa-volume-off" aria-hidden="true"></i> ĐÃ BẬT CHUÔNG`;
+        };
+
+
+        var sound = new Howl({
+            src: ['{{asset('public/admin/sound/noti1.mp3')}}'],
+            loop: true,
+            volume: 1,
+            onend: function() {
+                // console.log('New sound!');
+            }
+        });
+
+        setInterval(autoDeleteOrder, 300000);
+        // autoDeleteOrder();
+        function autoDeleteOrder(){
+            var url = '{{route('order.autoDeleteOrder')}}';
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: {
+                    _token: '{{csrf_token()}}'
+                },
+                success: function (data) {
+                }
+            });
+        }
 
         function markAsRead(notification) {
             var id = notification.dataset.id;
@@ -523,6 +570,29 @@
                 processing: true,
                 serverSide: true,
                 ajax: "{{ route('admin.getOrdersDelivering')}}",
+                columns: [
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'client_name', name: 'client_name'},
+                    {data: 'client_email', name: 'client_email'},
+                    {data: 'client_phone', name: 'client_phone'},
+                    {data: 'order_total', name: 'order_total'},
+                    {data: 'order_tracking', name: 'order_tracking'},
+                    {data: 'order_status', name: 'order_status'},
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false
+                    },
+                ]
+            });
+        });
+
+        $(function () {
+            var table = $('#order-delete-datatable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('admin.getOrdersDelete')}}",
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                     {data: 'client_name', name: 'client_name'},

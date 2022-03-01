@@ -12,7 +12,7 @@
 
     @include('partials-main.modal')
 
-<main class="page-wrapper" style="background-color: #f6fbff">
+<main class="page-wrapper" style="background-color: #5e000a">
 
     @include('partials-main.navbar')
     @include('partials-main.search')

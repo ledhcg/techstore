@@ -1,9 +1,11 @@
+
 <div class="header">
             <div class="header-content">
                 <nav class="navbar navbar-expand">
                     <div class="collapse navbar-collapse justify-content-between">
                         <div class="header-left">
                         </div>
+                        <button class="btn btn-primary" id="start-audio-context" onclick="startAudioContext(this)"><i class="fa fa-volume-up" aria-hidden="true"></i> BẬT CHUÔNG</button>
                         <ul class="navbar-nav header-right">
                             <li class="nav-item dropdown notification_dropdown">
                                 <a class="nav-link  ai-icon" href="javascript:void(0)" role="button" data-toggle="dropdown">

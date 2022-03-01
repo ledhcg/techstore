@@ -42,6 +42,7 @@
                             <li><a href="{{route('admin.all-orders-received')}}">Đơn hàng đã nhận</a></li>
                             <li><a href="{{route('admin.all-orders-delivering')}}">Đơn hàng đang giao hàng</a></li>
                             <li><a href="{{route('admin.all-orders-delivered')}}">Đơn hàng hoàn thành</a></li>
+                            <li><a href="{{route('admin.all-orders-delete')}}">Đơn hàng đã xóa</a></li>
                             <li><a href="{{route('admin.all-orders')}}">Tất cả đơn hàng</a></li>
                         </ul>
                     </li>

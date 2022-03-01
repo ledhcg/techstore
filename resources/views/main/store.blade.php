@@ -87,7 +87,7 @@
     <section class="container tab-content py-4 py-sm-5">
         <div class="tab-content">
             <div class="tab-pane fade show active" id="tab_category_all" role="tabpanel">
-                <h2 class="text-center pt-2 pt-sm-0 mb-sm-5">{{__('main.All')}}</h2>
+                <h2 class="text-center pt-2 pt-sm-0 mb-sm-5 text-light">{{__('main.All')}}</h2>
                 <div class="row pt-3 pt-sm-0">
                     @foreach($dataProducts as $product)
                     <!-- Item-->

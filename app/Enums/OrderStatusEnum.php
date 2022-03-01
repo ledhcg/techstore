@@ -10,4 +10,5 @@ class OrderStatusEnum extends AbstractEnum
     public const RECEIVED = 'RECEIVED';
     public const DELIVERING = 'DELIVERING';
     public const DELIVERED = 'DELIVERED';
+    public const DELETE = 'DELETE';
 }

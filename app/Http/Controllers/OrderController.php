@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Enums\OrderStatusEnum;
 use App\Enums\StatusEnum;
 use App\Events\newOrder;
 use App\Events\NewOrderNotification;
@@ -146,6 +146,17 @@ class OrderController extends Controller
             return response()->json(['isExist' => 'NO']);
         } else {
             return response()->json(['isExist' => 'YES']);
+        }
+    }
+
+    public function autoDeleteOrder(){
+        $orders = Order::where('order_status', OrderStatusEnum::CREATED)->get();
+        foreach ($orders as $order){
+            if(strtotime(($order->created_at)) <= strtotime(now()->subMinutes(config('app.TIME_AUTO_DELETE_ORDER')))){
+                $order->order_status = 'DELETE';
+                $order->save();
+                event(new UpdateChangeNotification($order->user_id, $order->order_tracking, $order->order_status));
+            }
         }
     }
 }

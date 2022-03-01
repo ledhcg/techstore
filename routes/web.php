@@ -69,6 +69,11 @@ Route::prefix('admin')->group(function (){
             'uses' => 'AdminController@getOrdersDelivering'
         ]);
 
+        Route::get('/getOrdersDelete', [
+            'as' => 'admin.getOrdersDelete',
+            'uses' => 'AdminController@getOrdersDelete'
+        ]);
+
         Route::get('/getOrdersReceived', [
             'as' => 'admin.getOrdersReceived',
             'uses' => 'AdminController@getOrdersReceived'
@@ -91,6 +96,12 @@ Route::prefix('admin')->group(function (){
             'as' => 'admin.all-orders-delivering',
             'uses' => 'AdminController@allOrdersDelivering'
         ]);
+
+        Route::get('/all-orders-delete', [
+            'as' => 'admin.all-orders-delete',
+            'uses' => 'AdminController@allOrdersDelete'
+        ]);
+
         Route::get('/all-orders-received', [
             'as' => 'admin.all-orders-received',
             'uses' => 'AdminController@allOrdersReceived'
@@ -199,6 +210,11 @@ Route::prefix('admin')->group(function (){
             Route::post('/changeOrderStatus', [
                 'as' => 'order.changeOrderStatus',
                 'uses' => 'OrderController@changeOrderStatus'
+            ]);
+
+            Route::post('/autoDeleteOrder', [
+                'as' => 'order.autoDeleteOrder',
+                'uses' => 'OrderController@autoDeleteOrder'
             ]);
 
         });

@@ -108,6 +108,12 @@ class AdminController extends Controller
             return $this->extracted($data);
         }
     }
+    public function getOrdersDelete(Request $request){
+        if ($request->ajax()) {
+            $data = Order::where('order_status', 'DELETE')->get();
+            return $this->extracted($data);
+        }
+    }
 
     public function getOrdersReceived(Request $request){
         if ($request->ajax()) {
@@ -148,6 +154,13 @@ class AdminController extends Controller
         $notifications = Auth::guard('admin')->user()->unreadNotifications;
         $dataCategories = Category::all();
         return view('admin.orders-delivering', [
+            'dataCategories' => $dataCategories,
+        ], compact('notifications'));
+    }
+    public function allOrdersDelete(){
+        $notifications = Auth::guard('admin')->user()->unreadNotifications;
+        $dataCategories = Category::all();
+        return view('admin.orders-delete', [
             'dataCategories' => $dataCategories,
         ], compact('notifications'));
     }
@@ -207,7 +220,7 @@ class AdminController extends Controller
                 $status = '
                         <select class="order_status_change" onchange="changeOrderStatus(this)" data-id="'.$order->id.'">
                     ';
-                $orderStatusEmum = ['CREATED', 'RECEIVED', 'DELIVERING', 'DELIVERED'];
+                $orderStatusEmum = ['CREATED', 'RECEIVED', 'DELIVERING', 'DELIVERED', 'DELETE'];
                 foreach ($orderStatusEmum as $enum) {
                     if ($enum == $order->order_status) {
                         $status .= '<option value="' . $enum . '" selected>' . $enum . '</option>';

@@ -21,6 +21,10 @@ return [
 
     'YANDEX_MAP_JS_API' => env('YANDEX_MAP_JS_API', ''),
     'YANDEX_DELIVERY_TOKEN' => env('YANDEX_DELIVERY_TOKEN', ''),
+    'TIME_AUTO_DELETE_ORDER' => env('TIME_AUTO_DELETE_ORDER', 30),
+    'SOCIAL_FB' => env('SOCIAL_FB', ''),
+    'SOCIAL_INS' => env('SOCIAL_INS', ''),
+
 
     /*
     |--------------------------------------------------------------------------
