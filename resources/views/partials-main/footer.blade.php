@@ -61,7 +61,7 @@
                 </div>
                 <div class="col-md-6 text-center text-md-end mb-4">
                     <div class="mb-3">
-                        <a class="btn-social bs-light bs-facebook ms-2 mb-2" href="{{config('app.SOCIAL_FB')}}"><i class="ci-facebook"></i></a>ma
+                        <a class="btn-social bs-light bs-facebook ms-2 mb-2" href="{{config('app.SOCIAL_FB')}}"><i class="ci-facebook"></i></a>
                         <a class="btn-social bs-light bs-instagram ms-2 mb-2" href="{{config('app.SOCIAL_INS')}}"><i class="ci-instagram"></i></a>
                     </div>
                     <img class="d-inline-block" src="{{asset('public/main/img/cards-alt.png')}}" width="187" alt="Payment methods">
