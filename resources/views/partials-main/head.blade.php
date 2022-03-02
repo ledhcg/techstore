@@ -61,6 +61,10 @@
                 transform: translateX(5%)
             }
         }
+        .background-htphodatviet{
+            background-image: url({{asset('public/admin/images/trongdong.svg')}});
+            background-color: #5e000a;
+        }
 
     </style>
     <!--Google font -->

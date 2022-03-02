@@ -12,7 +12,7 @@
 
     @include('partials-main.modal')
 
-<main class="page-wrapper background-htphodatviet">
+<main class="page-wrapper">
 
     @include('partials-main.navbar')
     @include('partials-main.search')

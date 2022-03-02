@@ -1,4 +1,4 @@
-@extends('layouts.main-layout')
+@extends('layouts.main-layout-white')
 
 @section('title')
     <title>HT Phở Đất Việt</title>
