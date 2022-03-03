@@ -34,7 +34,7 @@
             encrypted: true
         });
 
-        var channel = pusher.subscribe('htphodatviet');
+        var channel = pusher.subscribe('techstore');
         channel.bind('App\\Events\\newOrder', function(data) {
             reloadListNotifications();
             reloadListNotificationsDashboard();

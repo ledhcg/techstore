@@ -87,7 +87,7 @@
     <section class="container tab-content py-4 py-sm-5">
         <div class="tab-content">
             <div class="tab-pane fade show active" id="tab_category_all" role="tabpanel">
-                <h2 class="text-center pt-2 pt-sm-0 mb-sm-5 text-light">{{__('main.All')}}</h2>
+                <h2 class="text-center pt-2 pt-sm-0 mb-sm-5">{{__('main.All')}}</h2>
                 <div class="row pt-3 pt-sm-0">
                     @foreach($dataProducts as $product)
                     <!-- Item-->
@@ -157,7 +157,7 @@
             @foreach($dataCategories as $categoryS)
                 @if(\App\Models\Product::where('category_id',$categoryS->id)->get()->count() > 0)
                 <div class="tab-pane fade show" id="tab_category_{{$categoryS->id}}" role="tabpanel">
-                    <h2 class="text-center pt-2 pt-sm-0 mb-sm-5 text-white">{{$categoryS["category_name_".config('app.locale')]}}</h2>
+                    <h2 class="text-center pt-2 pt-sm-0 mb-sm-5">{{$categoryS["category_name_".config('app.locale')]}}</h2>
                     <div class="row pt-3 pt-sm-0">
                         <!-- Item-->
                         @foreach($dataProducts as $product)

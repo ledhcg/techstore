@@ -1,7 +1,7 @@
 @extends('layouts.main-layout')
 
 @section('title')
-    <title>HT Phở Đất Việt</title>
+    <title>TECHSTORE</title>
 @endsection
 
 @section('content')
@@ -169,7 +169,7 @@
 
             <!-- How it works-->
             <section class="pt-4 mb-4 mb-md-5">
-                <h2 class="h3 text-center mb-grid-gutter pt-2 text-light">{{__('main.How it works')}}</h2>
+                <h2 class="h3 text-center mb-grid-gutter pt-2">{{__('main.How it works')}}</h2>
                 <div class="row g-0 bg-light rounded-3">
                     <div class="col-xl-4 col-lg-12 col-md-4 border-end">
                         <div class="py-3">
@@ -211,7 +211,7 @@
                     <section class="pt-3 pt-md-4">
                         <!-- Heading-->
                         <div class="d-flex flex-wrap justify-content-between align-items-center pt-1 border-bottom pb-4 mb-4">
-                            <h2 class="h3 mb-0 pt-3 me-3 text-light">{{$categoryS["category_name_".config('app.locale')]}}</h2>
+                            <h2 class="h3 mb-0 pt-3 me-3">{{$categoryS["category_name_".config('app.locale')]}}</h2>
                             <div class="pt-3"><a class="btn btn-outline-primary btn-sm" href="{{route('main.store')}}#tab_category_{{$categoryS->id}}">{{__('main.More products')}}<i class="ci-arrow-right ms-1 me-n1"></i></a></div>
                         </div>
                         <div class="tns-carousel tns-controls-static tns-controls-outside tns-nav-enabled pt-2">

@@ -32,6 +32,6 @@ class newOrder implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return ['htphodatviet'];
+        return ['techstore'];
     }
 }

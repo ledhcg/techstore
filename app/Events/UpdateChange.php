@@ -35,6 +35,6 @@ class UpdateChange implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return ['htphodatviet'];
+        return ['techstore'];
     }
 }

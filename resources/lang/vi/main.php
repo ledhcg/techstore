@@ -2,8 +2,8 @@
 
 return [
 
-    config('app.name') => 'HT Phở Đất Việt',
-    'APP DESCRIPTION' => 'Ẩm thực Việt Nam tại Nga',
+    config('app.name') => 'TECHSTORE',
+    'APP DESCRIPTION' => 'Cửa hàng đồ điện tử',
     /*
     |--------------------------------------------------------------------------
     | GENDER

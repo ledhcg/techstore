@@ -62,8 +62,9 @@
             }
         }
         .background-htphodatviet{
-            background-image: url({{asset('public/admin/images/trongdong.svg')}});
-            background-color: #5e000a;
+            {{--background-image: url({{asset('public/admin/images/trongdong.svg')}});--}}
+            background-color: #F6FBFF;
+            /*background-repeat: no-repeat;*/
         }
 
     </style>

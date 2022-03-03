@@ -1,7 +1,7 @@
 @extends('layouts.main-layout')
 
 @section('title')
-    <title>HT Phở Đất Việt</title>
+    <title>TECHSTORE</title>
 @endsection
 
 @section('content')
@@ -22,12 +22,6 @@
         </div>
     </div>
 
-    <!-- Outlet stores-->
-    <section class="container pt-grid-gutter">
-        <div class="card">
-            <img src="{{asset('data/images/source/htphodatviet.jpg')}}" class="rounded" alt="Card image">
-        </div>
-    </section>
 
     <!-- Contact detail cards-->
     <section class="container pt-4 mt-md-4 mb-5">
@@ -73,7 +67,7 @@
     <!-- Split section: Map + Contact form-->
     <div class="container py-4">
         <div class="card">
-            <div style="position:relative;overflow:hidden;"><a href="https://yandex.ru/maps/15/tula/?utm_medium=mapframe&utm_source=maps" style="color:#eee;font-size:12px;position:absolute;top:0px;">Тула</a><a href="https://yandex.ru/maps/15/tula/house/sovetskaya_ulitsa_47/Z04YcAZoQUAAQFtufX14cHtkbQ==/?ll=37.618857%2C54.191779&utm_medium=mapframe&utm_source=maps&z=16" style="color:#eee;font-size:12px;position:absolute;top:14px;">Советская улица, 47 на карте Тулы — Яндекс.Карты</a><iframe src="https://yandex.ru/map-widget/v1/-/CCUqZ2R9xB" width="560" height="500" frameborder="1" allowfullscreen="true" style="position:relative;"></iframe></div>
+            <div style="position:relative;overflow:hidden;"><a href="https://yandex.ru/maps/213/moscow/?utm_medium=mapframe&utm_source=maps" style="color:#eee;font-size:12px;position:absolute;top:0px;">Москва</a><a href="https://yandex.ru/maps/213/moscow/house/11_ya_parkovaya_ulitsa_36/Z04YfgdlT00HQFtvfXRxcH1hZQ==/?ll=37.805680%2C55.801121&utm_medium=mapframe&utm_source=maps&z=17" style="color:#eee;font-size:12px;position:absolute;top:14px;">11-я Парковая улица, 36 на карте Москвы, ближайшее метро Первомайская — Яндекс.Карты</a><iframe src="https://yandex.ru/map-widget/v1/-/CCUubBa~XA" width="560" height="400" frameborder="1" allowfullscreen="true" style="position:relative;"></iframe></div>
         </div>
 
     </div>

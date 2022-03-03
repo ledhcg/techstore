@@ -49,7 +49,7 @@
                 </ul>
 
 				<div class="copyright">
-                    <p> Copyright &copy; <script>document.write(new Date().getFullYear())</script> <strong>HT PHỞ ĐẤT VIỆT</strong></p>
+                    <p> Copyright &copy; <script>document.write(new Date().getFullYear())</script> <strong>TECHSTORE</strong></p>
 				</div>
 			</div>
         </div>

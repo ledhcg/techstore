@@ -1,7 +1,7 @@
 @extends('layouts.admin-layout')
 
 @section('title')
-    <title>ADMIN | HT Phở Đất Việt</title>
+    <title>ADMIN | TECHSTORE</title>
 @endsection
 
 @section('content')

@@ -25,7 +25,7 @@
                                     @csrf
                                     <div class="form-group">
                                         <label class="mb-1 text-white"><strong>{{__('admin.Email')}}</strong></label>
-                                        <input type="email" class="form-control" name="email" placeholder="hello@htphodatviet.com">
+                                        <input type="email" class="form-control" name="email" placeholder="hello@techstore.com">
                                     </div>
                                     <div class="form-group">
                                         <label class="mb-1 text-white"><strong>{{__('admin.Password')}}</strong></label>
