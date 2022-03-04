@@ -25,11 +25,11 @@
                                     @csrf
                                     <div class="form-group">
                                         <label class="mb-1 text-white"><strong>{{__('admin.Email')}}</strong></label>
-                                        <input type="email" class="form-control" name="email" placeholder="hello@techstore.com">
+                                        <input type="email" class="form-control" style="color: #0c0c0c; font-weight: 600" name="email" placeholder="hello@techstore.com">
                                     </div>
                                     <div class="form-group">
                                         <label class="mb-1 text-white"><strong>{{__('admin.Password')}}</strong></label>
-                                        <input type="password" class="form-control" name="password" placeholder="Password">
+                                        <input type="password" class="form-control" style="color: #0c0c0c; font-weight: 600" name="password" placeholder="Password">
                                     </div>
 
                                     <div class="form-row d-flex justify-content-between mt-4 mb-2">
