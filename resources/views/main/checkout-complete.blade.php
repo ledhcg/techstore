@@ -14,7 +14,7 @@
                         <p class="fs-sm mb-2">{{__('main.Your order has been placed and will be processed as soon as possible')}}</p>
                         <p class="fs-sm mb-2">{{__('main.Your order number')}} - <span class="fw-medium pointer" data-order_tracking="{{$orderTracking}}" onclick="goToOrderTracking(this)">{{$orderTracking}}</span>.</p>
 
-                    <a class="btn btn-secondary mt-3 me-3" href="shop-grid-ls.html">{{__('main.Continue-shopping')}}</a><a class="btn btn-primary mt-3 pointer clear-modal-order-tracking" data-bs-toggle="modal" data-bs-target="#modal-order-tracking"><i class="ci-location"></i>&nbsp;{{__('main.Order-tracking')}}</a>
+                    <a class="btn btn-secondary mt-3 me-3" href="{{route('main.home')}}">{{__('main.Continue-shopping')}}</a><a class="btn btn-primary mt-3 pointer clear-modal-order-tracking" data-bs-toggle="modal" data-bs-target="#modal-order-tracking"><i class="ci-location"></i>&nbsp;{{__('main.Order-tracking')}}</a>
                 </div>
             </div>
         </div>
