@@ -16,6 +16,7 @@
 				</div>
 				<div class="row">
 					<div class="col-xl-3 col-sm-6">
+                        <a href="{{route('admin.all-users')}}">
 						<div class="card">
 							<div class="card-body">
 								<div class="media align-items-center">
@@ -31,8 +32,10 @@
 								</div>
 							</div>
 						</div>
+                        </a>
 					</div>
 					<div class="col-xl-3  col-sm-6">
+                        <a href="{{route('admin.all-orders')}}">
 						<div class="card">
 							<div class="card-body">
 								<div class="media align-items-center">
@@ -48,8 +51,10 @@
 								</div>
 							</div>
 						</div>
+                        </a>
 					</div>
 					<div class="col-xl-3  col-sm-6">
+                        <a href="{{route('product.all-products')}}">
 						<div class="card">
 							<div class="card-body">
 								<div class="media align-items-center">
@@ -65,8 +70,10 @@
 								</div>
 							</div>
 						</div>
+                        </a>
 					</div>
 					<div class="col-xl-3  col-sm-6">
+                        <a href="{{route('category.all-category')}}">
 						<div class="card">
 							<div class="card-body">
 								<div class="media align-items-center">
@@ -82,6 +89,7 @@
 								</div>
 							</div>
 						</div>
+                        </a>
 					</div>
 				</div>
 				<div class="row">
