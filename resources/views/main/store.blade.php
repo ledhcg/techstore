@@ -1,7 +1,7 @@
 @extends('layouts.main-layout')
 
 @section('title')
-    <title>HT Phở Đất Việt</title>
+    <title>TECHSTORE</title>
 @endsection
 
 @section('content')
