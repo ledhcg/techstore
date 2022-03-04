@@ -11,7 +11,7 @@
 				<div class="form-head d-flex align-items-center mb-sm-4 mb-3">
 					<div class="mr-auto">
 						<h2 class="text-black font-w600">Thống kê</h2>
-						<p class="mb-0">Cửa hàng HT Phở Đất Việt</p>
+						<p class="mb-0">Cửa hàng TECHSTORE</p>
 					</div>
 				</div>
 				<div class="row">
